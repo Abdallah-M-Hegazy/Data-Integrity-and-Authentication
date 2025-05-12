@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Verify 2FA{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h2>Two-Factor Authentication</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="POST" class="verify-form">
+        <div class="form-group">
+            <label for="otp">Enter 6-digit code from your authenticator app:</label>
+            <input type="text" 
+                   id="otp" 
+                   name="otp" 
+                   required
+                   pattern="\d{6}"
+                   title="6-digit verification code"
+                   maxlength="6"
+                   inputmode="numeric"
+                   autocomplete="one-time-code"
+                   autofocus>
+        </div>
+        <button type="submit" class="btn">Verify</button>
+    </form>
+    
+    <div class="hint">
+        <p>Open your authenticator app (like Google Authenticator) to get your verification code.</p>
+    </div>
+</div>
+{% endblock %}
